@@ -57,38 +57,40 @@
         </div>
       </form>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Jogos</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% games.forEach(game => { %>
+      <form method="post" action="/admin/games/results">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <th scope="row">
-                <%= game.id %>
-              </th>
-              <td>
-                <%= game.team_a %> vs
-                  <%= game.team_b %>
-              </td>
-              <td>
-                <a href="/admin/games/delete/<%= game.id %>">
-                  Excluir
-                </a>
-              </td>
+              <th>#</th>
+              <th>Jogos</th>
+              <th>Ações</th>
             </tr>
-            <% }) %>
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            <% games.forEach(game => { %>
+              <tr>
+                <th scope="row">
+                  <%= game.id %>
+                </th>
+                <td>
+                  <input class="form-control" name="team_<%= game.id %>[a]" >
+                  <%= game.team_a %> vs <%= game.team_b %>
+                  <input class="form-control" name="team_<%= game.id %>[b]" >
+                </td>
+                <td>
+                  <a href="/admin/games/delete/<%= game.id %>">
+                    Excluir
+                  </a>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+        <input type="submit" value="Informar resultados">
+      </form>
     </div>
   </section>
   </div>
-
 
   <footer class="page-footer center-on-small-only">
     <div class="footer-copyright">
@@ -98,7 +100,6 @@
       </div>
     </div>
   </footer>
-
 
   <!-- SCRIPTS -->
   <!-- JQuery -->

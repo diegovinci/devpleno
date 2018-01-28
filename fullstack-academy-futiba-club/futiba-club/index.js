@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const account = require('./account')
 const admin = require('./admin')
+const groups = require('./groups')
 
 // Declaração dos Middlewares
 app.use(express.static('public')) // Apontando arquivos estáticos para public
@@ -41,6 +42,8 @@ const init = async () => {
   app.use(account(connection))
   // Definindo router admin para a rota /admin
   app.use('/admin', admin(connection))
+  // Definindo router groups para a rota /groups
+  app.use('/groups', groups(connection))
 
   const PORT = 3000
   app.listen(PORT, err => {

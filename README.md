@@ -4,6 +4,6 @@ Este projeto foi entregue como parte do **Fullstack Academy** (edição FutibaCl
 
 **Participante:** Diego Vinciguerra
 
-**Chave do Certificado:** 643A-D970-1630-E7F3
+**Chave do Certificado:** AD9D-1468-8BE0-01D7
 
 O certificado pode ser consultado em: https://certificados.devpleno.com

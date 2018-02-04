@@ -1,5 +1,3 @@
-# Futiba Club
-
 ## Informações importantes:
 
 Este projeto foi entregue como parte do **Fullstack Academy** (edição FutibaClub) promovido pelo **DevPleno** (www.devpleno.com).

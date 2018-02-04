@@ -19,44 +19,36 @@
 
 <body>
   <header>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light green fixed-top scrolling-navbar">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="/img-futiba-club/logo.png" height="30" alt="Futiba Club">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7"
-          aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
-          <% include ../elements/menu-items %>
-        </div>
-      </div>
-    </nav>
+    <% include ../elements/navbar %>
   </header>
 
   <section class="content">
     <div class="container">
       <div class="row">
-        <h2>Gerenciamento de Jogos</h2>
+        <h2 class="subtitle">Gerenciamento de Jogos</h2>
       </div>
       <form class="row" method="post">
-        <div class="md-form">
-          <i class="fa fa-user prefix grey-text"></i>
-          <input type="text" class="form-control" name="team_a">
-          <label for="orangeForm-email">Time A</label>
+        <div class="col-md-6">
+          <div class="md-form">
+            <i class="fa fa-users prefix grey-text"></i>
+            <input type="text" class="form-control" name="team_a">
+            <label for="orangeForm-email">Time A</label>
+          </div>
         </div>
-        <div class="md-form">
-          <i class="fa fa-user prefix grey-text"></i>
-          <input type="text" class="form-control" name="team_b">
-          <label for="orangeForm-email">Time B</label>
+        <div class="col-md-6">
+          <div class="md-form">
+            <i class="fa fa-users prefix grey-text"></i>
+            <input type="text" class="form-control" name="team_b">
+            <label for="orangeForm-email">Time B</label>
+          </div>
         </div>
-        <div class="text-center">
-          <button class="btn btn-deep-orange">Criar jogo</button>
+        <div class="cold-md-12 text-center">
+          <button class="btn btn-danger">
+            Criar jogo<i class="fa fa-plus ml-1" aria-hidden="true"></i>
+          </button>
         </div>
       </form>
-
+      <br>
       <form method="post" action="/admin/games/results">
         <table class="table table-striped">
           <thead>
@@ -68,38 +60,34 @@
           </thead>
           <tbody>
             <% games.forEach(game => { %>
-              <tr>
+              <tr class="guessings">
                 <th scope="row">
                   <%= game.id %>
                 </th>
                 <td>
-                  <input class="form-control" name="team_<%= game.id %>[a]" >
-                  <%= game.team_a %> vs <%= game.team_b %>
-                  <input class="form-control" name="team_<%= game.id %>[b]" >
+                  <input type="number" class="form-control" min="0" max="25" name="team_<%= game.id %>[a]">
+                  <span class="teams-label">
+                    <%= game.team_a %> vs <%= game.team_b %>
+                  </span>
+                  <input type="number" class="form-control" min="0" max="25" name="team_<%= game.id %>[b]">
                 </td>
                 <td>
                   <a href="/admin/games/delete/<%= game.id %>">
-                    Excluir
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Excluir
                   </a>
                 </td>
               </tr>
-              <% }) %>
+            <% }) %>
           </tbody>
         </table>
-        <input type="submit" value="Informar resultados">
+        <button class="btn btn-danger waves-effect waves-light" type="submit">
+          Informar resultados<i class="fa fa-paper-plane-o ml-1" aria-hidden="true"></i>
+        </button>
       </form>
     </div>
   </section>
-  </div>
 
-  <footer class="page-footer center-on-small-only">
-    <div class="footer-copyright">
-      <div class="container-fluid">
-        © 2018 Projeto desenvolvido durante o Fullstack Academy -
-        <a href="https://www.devpleno.com">DevPleno</a>
-      </div>
-    </div>
-  </footer>
+  <% include ../elements/footer %>
 
   <!-- SCRIPTS -->
   <!-- JQuery -->

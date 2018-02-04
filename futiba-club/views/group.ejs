@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Futiba Club - Fullstack Academy - DevPleno</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/futiba-interno.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <% include elements/navbar %>
+  </header>
+
+  <section class="content">
+    <div class="container">
+      <div class="row subtitle">
+        <h2>Grupo:
+          <%= group.name %>
+        </h2>
+      </div>
+      <% /* Lista os usuários pendentes para o owner do grupo */ %>
+      <% if (group.role === 'owner') { %>
+        <% /* Verifica se existem usuários que solicitaram acesso ao grupo */ %>
+        <% if (pendings.length > 0) { %>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Usuário</th>
+                <th></th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% pendings.forEach(user => { %>
+                <tr>
+                  <td>
+                    <%= user.name %>
+                  </td>
+                  <td>
+                    <span class="badge cyan">
+                      <%= user.role %>
+                    </span>
+                  </td>
+                  <td>
+                    <a href="/groups/<%= group.id %>/pending/<%= user.id %>/yes">
+                      <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                      Permitir
+                    </a> |
+                    <a href="/groups/<%= group.id %>/pending/<%= user.id %>/no">
+                      Negar
+                      <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+
+          </table>
+        <% } else { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            Nenhum usuário pendente
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+      <% } %>
+
+      <% if (group.role === 'pending') { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          Aprovação pendente
+        </div>
+
+      <% } else if (group.role === 'owner' || group.role === 'user') { %>
+        <!-- <pre><%= JSON.stringify(games) %></pre> -->
+        <form method="post">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Jogos</th>
+                <th>Pontuação</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+              <% games.forEach(game => { %>
+                <tr>
+                  <td class="guessings">
+                    <% if (game.guess_a) { %>
+                      <span class="badge badge-pill green">
+                        <%= game.guess_a %>
+                      </span>
+                    <% } else { %>
+                      <input type="number" class="form-control" min="0" max="25" name="team_<%= game.id %>[a]">
+                    <% } %>
+                    <span class="teams-label">
+                      <%= game.team_a %> vs <%= game.team_b %>
+                    </span>
+                    <% if (game.guess_b) { %>
+                      <span class="badge badge-pill green">
+                        <%= game.guess_b %>
+                      </span>
+                    <% } else { %>
+                      <input type="number" class="form-control" min="0" max="25" name="team_<%= game.id %>[b]">
+                    <% } %>
+                  </td>
+                  <td>
+                    <%= game.score %>
+                  </td>
+                </tr>
+              <% }) %>
+
+            </tbody>
+          </table>
+          <button class="btn btn-danger" type="submit">
+            Salvar Aposta
+            <i class="fa fa-save ml-1" aria-hidden="true"></i>
+          </button>
+        </form>
+
+      <% } else { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          Acesso negado
+        </div>
+      <% } %>
+
+    </div>
+  </section>
+
+  <% include elements/footer %>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>

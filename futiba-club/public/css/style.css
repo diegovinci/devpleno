@@ -1,0 +1,26 @@
+/* Your custom styles */
+section, header {
+  margin-bottom: 100px;
+}
+
+.guessings td, .guessings th {
+    vertical-align: baseline;
+}
+
+.guessings .form-control {
+  display: table-row;
+  width: 5%;
+}
+
+.guessings input[type=number] {
+  text-align: center;
+  width: 40px;
+}
+
+.teams-label {
+  padding: 0 15px;  
+}
+
+.subtitle {
+  padding-bottom: 50px
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Futiba Club - Fullstack Academy - DevPleno</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/futiba.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <% include elements/navbar %>
+    <!--Intro Section-->
+    <section class="view intro-2 hm-gradient">
+      <div class="full-bg-img">
+        <div class="container flex-center">
+          <div class="row flex-center">
+            <div class="col-md-10 col-lg-6 text-center text-md-left margins">
+              <div class="white-text">
+                <img src="/img-futiba-club/logo2.png" />
+                <h1 class="h1-responsive font-bold mt-sm-5 wow fadeInLeft" data-wow-delay="0.3s">Desafie seus amigos</h1>
+                <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
+                <h6 class="wow fadeInLeft" data-wow-delay="0.3s">Quem consegue acertar mais jogos da Copa e do Brasileirão?
+                </h6>
+                <br>
+
+                <% if (!user) { %>
+                  <a class="btn btn-white dark-grey-text font-bold wow fadeInLeft" data-wow-delay="0.3s" href="/new-account">Criar conta</a>
+                <% } %>
+                <a class="btn btn-outline-white wow fadeInLeft" data-wow-delay="0.3s" href="/classification">Ver classificação</a>
+
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 hidden-md-down wow fadeInRight d-flex justify-content-center" data-wow-delay="0.3s">
+              <img src="/img-futiba-club/mock.png" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <section class="classificacao-home">
+    <div class="container">
+      <h2>Top 3 - Classificação de Grupos</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Grupo</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (groups.length > 0) { %>
+            <% groups.forEach( group => { %>
+              <tr>
+                <td>
+                  <%= group.name %>
+                </td>
+                <td>
+                  <%= group.score %>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else{ %>
+            <tr>
+              <td colspan="3">Não existem grupos cadastrados.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <% if (!user) { %>
+    <section class="forms-home">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-lg-6 col-md-6 mb-r">
+            <div class="card col">
+              <div class="card-body">
+                <form method="post" action="/login">
+                  <p class="h5 text-center mb-4">Entrar</p>
+                  <div class="md-form">
+                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="email" id="orangeForm-email" class="form-control" required name="email">
+                    <label for="orangeForm-email">E-mail</label>
+                  </div>
+                  <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="password" id="orangeForm-pass" class="form-control" required name="passwd">
+                    <label for="orangeForm-pass">Senha</label>
+                  </div>
+
+                  <% if (error) { %>
+                    <p> <%= error %> </p>
+                  <% } %>
+
+                  <div class="text-center">
+                    <button class="btn btn-danger">
+                      Entrar <i class="fa fa-sign-in ml-1" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 mb-r">
+            <div class="card col">
+              <div class="card-body">
+                <form class="col" method="post" action="/new-account">
+                  <p class="h5 text-center mb-4">Criar uma conta</p>
+                  <div class="md-form">
+                    <i class="fa fa-user prefix grey-text"></i>
+                    <input type="text" id="orangeForm-name" class="form-control" name="name" required>
+                    <label for="orangeForm-name">Seu nome</label>
+                  </div>
+                  <div class="md-form">
+                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="email" id="orangeForm-email2" class="form-control" name="email" required>
+                    <label for="orangeForm-email2">Seu e-mail</label>
+                  </div>
+                  <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="password" id="orangeForm-pass2" class="form-control" name="passwd" required>
+                    <label for="orangeForm-pass2">Sua senha</label>
+                  </div>
+                  <div class="text-center">
+                    <button class="btn btn-danger">
+                      Criar conta
+                      <i class="fa fa-plus ml-1" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  <% } %>
+
+  <% include elements/footer %>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>

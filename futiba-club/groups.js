@@ -2,11 +2,10 @@ const express = require('express')
 const app = express.Router()
 
 const init = connection => {
-
   // Middleware para controle de acesso à rota /groups
   app.use((req, res, next) => {
     if (!req.session.user) {
-      res.redirect('/')
+      res.redirect('/login')
     } else {
       next()
     }
@@ -110,6 +109,31 @@ const init = connection => {
     }
   })
 
+  app.get('/delete/:id', async (req, res) => {
+    const [group] = await connection.execute(
+      `select *
+      from groups
+      left join groups_users
+        on groups_users.group_id = groups.id
+        and groups_users.user_id = ?
+      where groups.id = ?`, [
+        req.session.user.id,
+        req.params.id
+      ]
+    )
+    // Checando privilégios de owner
+    if (group.length === 0 || group[0].role !== 'owner') {
+      res.redirect(`/groups`)
+    } else {
+      await connection.execute(
+        'delete from groups where id = ? limit 1', [
+          req.params.id
+        ]
+      )
+      res.redirect(`/groups`)
+    }
+  })
+
   app.get('/:id/join', async (req, res) => {
     // Selecionando relação/role do usuário logado com o grupo
     const [rows, fields] = await connection.execute(
@@ -146,7 +170,6 @@ const init = connection => {
       }
       guessings.push(game)
     })
-
     /* Inserts em lote - para cada palpite, é retornada uma promisse, 
     resultando em um array de promisses dentro de batch */
     const batch = guessings.map(guess => {
@@ -163,7 +186,6 @@ const init = connection => {
     })
     // Retornando promisse que só será resolvida após as que estão em batch
     await Promise.all(batch)
-
     res.redirect(`/groups/${req.params.id}`)
   })
 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Futiba Club - Fullstack Academy - DevPleno</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/futiba-interno.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <% include elements/navbar %>
+  </header>
+
+  <section class="content">
+    <div class="container">
+      <div class="row subtitle">
+        <h2>Grupos</h2>
+      </div>
+      <form class="row" method="post">
+        <div class="col-md-9">
+          <div class="md-form">
+            <i class="fa fa-users prefix grey-text"></i>
+            <input type="text" class="form-control" name="name">
+            <label for="orangeForm-email">Nome do Grupo</label>
+          </div>
+        </div>
+        <div class="col-md-3">    
+          <div class="text-center">
+            <button class="btn btn-danger"> 
+              Criar Grupo
+              <i class="fa fa-plus ml-1" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <% if(groups.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Grupos</th>
+              <th></th>
+              <th>Ações</th>  
+            </tr>
+          </thead>
+          <tbody>
+            
+          <% groups.forEach(group => { %>
+            <tr>
+              <th scope="row"><%= group.id %></th>
+              <td>
+                <a href="/groups/<%= group.id %>">
+                  <%= group.name %>
+                </a>
+              </td>
+              <td>
+                <% if (group.role === 'owner') { %>
+                  <span class="badge pink">
+                <% } else if (group.role === 'user') { %>
+                  <span class="badge amber darken-2">
+                <% } else if (group.role === 'pending') { %>
+                  <span class="badge cyan">
+                <% } else { %>
+                  <span>
+                <% } %>
+                <%= group.role %></span>
+              </td>
+              <td>
+                <% if (group.role === 'owner') { %>  
+                  <a href="/groups/delete/<%= group.id %>">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Excluir
+                  </a>
+                <% } %>
+                <% if (!group.role) { %>
+                  <a href="/groups/<%= group.id %>/join">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i> Solicitar entrada
+                  </a>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+
+          </tbody>
+        </table>
+      <% } else { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+            Nenhum grupo cadastrado
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <% include elements/footer %>
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="/js/mdb.min.js"></script>
+</body>
+
+</html>
